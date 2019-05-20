@@ -98,7 +98,7 @@ def meldColleges(colleges):
 def scrapeFacultyData():
 	# IDENTIFIERS FOR NAVIGATING FACULTY PAGE:
 	BASE_PAGE = 'http://www.mccormick.northwestern.edu'
-	EECS_PEOPLE = '/eecs/computer-science/people/'
+	EECS_PEOPLE = '/computer-science/people/'
 	FACULTY_PAGE = BASE_PAGE + EECS_PEOPLE
 	# list of faculty pages, href to each faculty details page
 	FACULTY_PAGES = '//div[@class="faculty-info"]/h3/a[@href]/@href'
@@ -126,8 +126,10 @@ def scrapeFacultyData():
 	# get base cs faculty listing website
 	base_content = requests.get(FACULTY_PAGE).content
 	base_tree = html.fromstring(base_content)
+
 	# grab faculty from page as list,
 	faculty_pages = base_tree.xpath(FACULTY_PAGES)
+
 	# loop over every faculty on this page and collect scraped faculty data
 	all_faculty = []
 	for faculty_page in faculty_pages:
@@ -140,8 +142,7 @@ def scrapeFacultyData():
 		# (3 pages are not and have hull https:// links...)
 		if not faculty_page.startswith('http'):
 			faculty_page = 'http:' + faculty_page
-		else:
-			continue  # don't have parsers for personal/outside sites.
+
 		content = requests.get(faculty_page).content
 		tree = html.fromstring(content)
 		# scrape faculty data
@@ -413,7 +414,7 @@ def scrapeEventData():
 		today += oneweek
 	driver.close()
 	return all_events
-		
+
 
 def getEventOnotologized(event):
 	times, year, month, day = dayMonthYear(event['date_time'])
@@ -560,7 +561,7 @@ def main():
 	########
 	print('faculty')
 	faculty = facultyMeld(colleges)
-	# print faculty 
+	# print faculty
 	toFile(faculty, 'faculty')
 	########
 	print('events')
