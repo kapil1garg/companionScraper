@@ -58,10 +58,9 @@ def isa(arg1, arg2):
 	return lispStyle('isa', [arg1, arg2])
 
 
-def toFile(meld, filename):
-	f = open(real_dirname() + '/' + filename + '.meld', 'w+')
-	f.write(meld)
-	f.close()
+def toFile(output_data, filename):
+	with open('{}/{}.krf'.format(real_dirname(), filename), 'w+') as f:
+		f.write(output_data)
 
 ##############################################################################
 #                           COLLEGE MELD FUNCTIONS                           #
